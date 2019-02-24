@@ -1,5 +1,7 @@
 # redux_text_field
 
+[![Build Status](https://travis-ci.org/Albert221/redux_text_field.svg?branch=master)](https://travis-ci.org/Albert221/redux_text_field)
+
 A new Flutter package.
 
 ## Getting Started
