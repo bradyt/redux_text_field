@@ -1,9 +1,18 @@
-language: dart
+os:
+  - linux
 sudo: false
-dart:
-- stable
-- dev
-with_content_shell: false
-dart_task:
-- test: --platform vm
-- dartanalyzer: --fatal-warnings lib
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - libstdc++6
+      - fonts-droid
+before_script:
+  - git clone https://github.com/flutter/flutter.git -b dev --depth 1
+  - ./flutter/bin/flutter doctor
+script:
+  - ./flutter/bin/flutter test
+cache:
+  directories:
+    - $HOME/.pub-cache
