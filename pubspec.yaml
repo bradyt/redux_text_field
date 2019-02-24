@@ -1,8 +1,8 @@
 name: redux_text_field
-description: Flutter's TextField that can work with Redux.
+description: Flutter's TextField but much easier to attach to a Redux store.
 version: 1.0.0
-author:
-homepage:
+author: Albert Wolszon <w.albert221@gmail.com>
+homepage: https://github.com/Albert221/redux_text_field
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
