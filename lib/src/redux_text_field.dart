@@ -98,18 +98,24 @@ class _ReduxTextFieldState<T> extends State<ReduxTextField> {
     super.initState();
 
     _controller.addListener(() {
+      if (widget.converter(widget.store.state as T) == _controller.text) {
+        return;
+      }
+
       widget.action.setNewValue(_controller.text);
       widget.store.dispatch(widget.action);
     });
 
-    _storeSubscription = widget.store.onChange.listen((store) {
-      final text = widget.converter(store as T);
+    _storeSubscription = widget.store.onChange.listen((state) {
+      final text = widget.converter(state as T);
 
-      if (_controller.text != text) {
-        setState(() {
-          _controller.text = text;
-        });
+      if (_controller.text == text) {
+        return;
       }
+
+      setState(() {
+        _controller.text = text;
+      });
     });
   }
 
