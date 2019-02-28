@@ -92,6 +92,7 @@ class ReduxTextField<T> extends StatefulWidget {
 class _ReduxTextFieldState<T> extends State<ReduxTextField> {
   final _controller = TextEditingController();
   StreamSubscription<T> _storeSubscription;
+  String lastText = '';
 
   @override
   void initState() {
@@ -102,12 +103,14 @@ class _ReduxTextFieldState<T> extends State<ReduxTextField> {
   }
 
   void _controllerListener() {
-    if (widget.converter(widget.store.state as T) == _controller.text) {
+    if (lastText == _controller.text ||
+        widget.converter(widget.store.state as T) == _controller.text) {
       return;
     }
 
     widget.action.setNewValue(_controller.text);
     widget.store.dispatch(widget.action);
+    lastText = _controller.text;
   }
 
   void _storeListener(state) {
@@ -118,7 +121,9 @@ class _ReduxTextFieldState<T> extends State<ReduxTextField> {
     }
 
     setState(() {
+      _controller.removeListener(_controllerListener);
       _controller.text = text;
+      _controller.addListener(_controllerListener);
     });
   }
 
