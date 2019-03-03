@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Add `onControllerChange` parameter which is called once the controller listener is called and the text field value has changed.
+
 ## 1.0.3
 
 - Fix critical bug with a dead loop while defocusing input.
