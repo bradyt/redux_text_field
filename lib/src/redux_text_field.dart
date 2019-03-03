@@ -5,10 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_text_field/redux_text_field.dart';
 
+typedef ChangeCallback = void Function(String);
+
 class ReduxTextField<T> extends StatefulWidget {
   final Store<T> store;
   final String Function(T) converter;
   final TextFieldUpdatedAction action;
+  final ChangeCallback onControllerChange;
 
   final FocusNode focusNode;
   final InputDecoration decoration;
@@ -42,6 +45,7 @@ class ReduxTextField<T> extends StatefulWidget {
     @required this.store,
     @required this.converter,
     @required this.action,
+    this.onControllerChange,
     this.focusNode,
     this.decoration = const InputDecoration(),
     TextInputType keyboardType,
@@ -110,6 +114,11 @@ class _ReduxTextFieldState<T> extends State<ReduxTextField> {
 
     widget.action.setNewValue(_controller.text);
     widget.store.dispatch(widget.action);
+
+    if (widget.onControllerChange != null) {
+      widget.onControllerChange(_controller.text);
+    }
+
     lastText = _controller.text;
   }
 
